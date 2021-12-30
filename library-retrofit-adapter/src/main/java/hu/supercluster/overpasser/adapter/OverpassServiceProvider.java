@@ -8,8 +8,24 @@ import java.net.URL;
 
 public class OverpassServiceProvider {
     private static OverpassService service;
+    private static URL url;
+
+    public static void initialize() {
+        try {
+            initialize("http://overpass-api.de");
+        } catch (MalformedURLException ignored) {
+            // Will not happen
+        }
+    }
+
+    public static void initialize(String endpoint) throws MalformedURLException {
+        if (url == null) {
+            url = new URL(endpoint);
+        }
+    }
 
     public static OverpassService get() {
+        if (url == null) initialize();
         if (service == null) {
             try {
                 service = createService();
@@ -23,7 +39,7 @@ public class OverpassServiceProvider {
 
     private static OverpassService createService() throws MalformedURLException {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(new URL("http://overpass-api.de"))
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
