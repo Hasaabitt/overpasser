@@ -1,29 +1,13 @@
-apply plugin: 'com.android.library'
+apply plugin: 'java'
 
 // gradle.properties holds credentials and is not checked in
 def gradleProperties = new File('gradle.properties')
 if (gradleProperties.exists()) {
-    apply from: 'maven-push.gradle'
+
 }
 
-
-android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
-
-    defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+repositories {
+    mavenCentral()
 }
 
 dependencies {

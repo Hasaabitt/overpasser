@@ -1,29 +1,15 @@
 package hu.supercluster.overpasser.library.query;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
 import hu.supercluster.overpasser.library.output.OutputModificator;
 import hu.supercluster.overpasser.library.output.OutputOrder;
 import hu.supercluster.overpasser.library.output.OutputVerbosity;
+import org.junit.Test;
 
 import static hu.supercluster.overpasser.library.output.OutputFormat.JSON;
 import static org.junit.Assert.assertEquals;
 
 public class UsageExamplesTest {
-    @Mock OverpassQueryBuilder builder;
     private OverpassQuery query;
-
-    public UsageExamplesTest() {
-        MockitoAnnotations.initMocks(this);
-    }
-
-    @Before
-    public void setUp() throws Exception {
-        query = new OverpassQuery(builder);
-    }
 
     @Test
     public void testSimpleFilterQuery() throws Exception {
@@ -31,17 +17,16 @@ public class UsageExamplesTest {
                 .format(JSON)
                 .timeout(30)
                 .filterQuery()
-                    .node()
-                    .amenity("parking")
-                    .tagNot("access", "private")
-                    .boundingBox(
-                            47.48047027491862, 19.039797484874725,
-                            47.51331674014172, 19.07404761761427
-                    )
+                .node()
+                .amenity("parking")
+                .tagNot("access", "private")
+                .boundingBox(
+                        47.48047027491862, 19.039797484874725,
+                        47.51331674014172, 19.07404761761427
+                )
                 .end()
                 .output(OutputVerbosity.BODY, OutputModificator.CENTER, OutputOrder.QT, 100)
-                .build()
-        ;
+                .build();
 
         String expected = "[out:\"json\"][timeout:\"30\"]; (node[\"amenity\"=\"parking\"][\"access\"!=\"private\"](47.48047027491862,19.039797484874725,47.51331674014172,19.07404761761427);<;); out body center qt 100;";
 
@@ -54,33 +39,32 @@ public class UsageExamplesTest {
                 .format(JSON)
                 .timeout(30)
                 .filterQuery()
-                    .node()
-                        .amenity("parking")
-                        .tagNot("access", "private")
-                        .boundingBox(
-                                47.48047027491862, 19.039797484874725,
-                                47.51331674014172, 19.07404761761427
-                        )
-                    .prepareNext()
-                    .way()
-                        .amenity("parking")
-                        .tagNot("access", "private")
-                        .boundingBox(
-                                47.48047027491862, 19.039797484874725,
-                                47.51331674014172, 19.07404761761427
-                        )
-                    .prepareNext()
-                    .rel()
-                        .amenity("parking")
-                        .tagNot("access", "private")
-                        .boundingBox(
-                                47.48047027491862, 19.039797484874725,
-                                47.51331674014172, 19.07404761761427
-                        )
+                .node()
+                .amenity("parking")
+                .tagNot("access", "private")
+                .boundingBox(
+                        47.48047027491862, 19.039797484874725,
+                        47.51331674014172, 19.07404761761427
+                )
+                .prepareNext()
+                .way()
+                .amenity("parking")
+                .tagNot("access", "private")
+                .boundingBox(
+                        47.48047027491862, 19.039797484874725,
+                        47.51331674014172, 19.07404761761427
+                )
+                .prepareNext()
+                .rel()
+                .amenity("parking")
+                .tagNot("access", "private")
+                .boundingBox(
+                        47.48047027491862, 19.039797484874725,
+                        47.51331674014172, 19.07404761761427
+                )
                 .end()
                 .output(OutputVerbosity.BODY, OutputModificator.CENTER, OutputOrder.QT, 100)
-                .build()
-        ;
+                .build();
 
         String expected = "[out:\"json\"][timeout:\"30\"]; ("
                 + "node[\"amenity\"=\"parking\"][\"access\"!=\"private\"](47.48047027491862,19.039797484874725,47.51331674014172,19.07404761761427); "
@@ -101,18 +85,17 @@ public class UsageExamplesTest {
                         47.51331674014172, 19.07404761761427
                 )
                 .filterQuery()
-                    .node()
-                        .amenity("parking")
-                        .tagNot("access", "private")
-                    .prepareNext()
-                    .way()
-                        .amenity("parking")
-                        .tagNot("access", "private")
+                .node()
+                .amenity("parking")
+                .tagNot("access", "private")
+                .prepareNext()
+                .way()
+                .amenity("parking")
+                .tagNot("access", "private")
                 .end()
 
                 .output(OutputVerbosity.BODY, OutputModificator.CENTER, OutputOrder.QT, 100)
-                .build()
-                ;
+                .build();
 
         String expected = "[out:\"json\"][timeout:\"30\"]"
                 + "[bbox:47.48047027491862,19.039797484874725,47.51331674014172,19.07404761761427]"
@@ -130,29 +113,28 @@ public class UsageExamplesTest {
                 .format(JSON)
                 .timeout(30)
                 .filterQuery()
-                    .node()
-                        .amenity("parking")
-                        .tagNot("access", "private")
-                        .around(50.5)
-                        .prepareNext()
-                    .way()
-                        .amenity("parking")
-                        .tagNot("access", "private")
-                        .around(
-                                50.5, 47.48047027491862, 19.039797484874725
-                        )
-                        .prepareNext()
-                    .rel()
-                        .amenity("parking")
-                        .tagNot("access", "private")
-                        .boundingBox(
-                                47.48047027491862, 19.039797484874725,
-                                47.51331674014172, 19.07404761761427
-                        )
+                .node()
+                .amenity("parking")
+                .tagNot("access", "private")
+                .around(50.5)
+                .prepareNext()
+                .way()
+                .amenity("parking")
+                .tagNot("access", "private")
+                .around(
+                        50.5, 47.48047027491862, 19.039797484874725
+                )
+                .prepareNext()
+                .rel()
+                .amenity("parking")
+                .tagNot("access", "private")
+                .boundingBox(
+                        47.48047027491862, 19.039797484874725,
+                        47.51331674014172, 19.07404761761427
+                )
                 .end()
                 .output(OutputVerbosity.BODY, OutputModificator.CENTER, OutputOrder.QT, 100)
-                .build()
-        ;
+                .build();
 
         String expected = "[out:\"json\"][timeout:\"30\"]; ("
                 + "node[\"amenity\"=\"parking\"][\"access\"!=\"private\"](around:50.5); "
