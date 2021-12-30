@@ -27,17 +27,13 @@ public class OverpassServiceProvider {
     public static OverpassService get() {
         if (url == null) initialize();
         if (service == null) {
-            try {
-                service = createService();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+            service = createService();
         }
 
         return service;
     }
 
-    private static OverpassService createService() throws MalformedURLException {
+    private static OverpassService createService() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
